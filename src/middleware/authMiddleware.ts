@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 
 import { User } from "../models/userModel";
 
-const protect = asyncHandler(async (req, res, next) => {
+export const protect = asyncHandler(async (req, res, next) => {
   let token;
 
   if (req.headers.cookie) {
@@ -29,5 +29,3 @@ const protect = asyncHandler(async (req, res, next) => {
     throw new Error("Not authorized, no token");
   }
 });
-
-module.exports = { protect };

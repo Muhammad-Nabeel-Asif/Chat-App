@@ -7,7 +7,7 @@ import { Chat } from "../models/chatModel";
 //@description     Get all Messages
 //@route           GET /api/messages/fetch-all-messages/:chatId
 //@access          Protected
-const fetchAllMessages = asyncHandler(async (req: any, res: any) => {
+export const fetchAllMessages = asyncHandler(async (req: any, res: any) => {
   try {
     const messages = await Message.find({ chat: req.params.chatId })
       .populate("sender", "picture email")
@@ -23,7 +23,7 @@ const fetchAllMessages = asyncHandler(async (req: any, res: any) => {
 //@description     Send a new Message
 //@route           POST /api/messages/send-message
 //@access          Protected
-const sendMessage = asyncHandler(async (req: any, res: any) => {
+export const sendMessage = asyncHandler(async (req: any, res: any) => {
   const { content, chatId } = req.body;
 
   if (!content || !chatId) {
@@ -55,5 +55,3 @@ const sendMessage = asyncHandler(async (req: any, res: any) => {
     throw new Error(error.message);
   }
 });
-
-exports = { fetchAllMessages, sendMessage };

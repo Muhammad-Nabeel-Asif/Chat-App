@@ -7,7 +7,7 @@ import { expireToken } from "../utils/expireToken";
 //@description     Get or Search all users or provide search query to get specific ones
 //@route           GET /api/user/getUsers?search=
 //@access          Private
-const getUsers = asyncHandler(async (req: any, res: any) => {
+export const getUsers = asyncHandler(async (req: any, res: any) => {
   const searchTerm = req.query.search
     ? {
         $or: [
@@ -26,7 +26,7 @@ const getUsers = asyncHandler(async (req: any, res: any) => {
 //@description     Register / Signup new user
 //@route           POST /api/users/signup
 //@access          Public
-const signUp = asyncHandler(async (req: any, res: any) => {
+export const signUp = asyncHandler(async (req: any, res: any) => {
   const { name, mobile_number, email, password, pic } = req.body;
 
   if (!email || !password || !mobile_number) {
@@ -73,8 +73,7 @@ const signUp = asyncHandler(async (req: any, res: any) => {
 //@description     Auth / Login the user
 //@route           POST /api/users/login
 //@access          Public
-
-const login = asyncHandler(async (req: any, res: any) => {
+export const login = asyncHandler(async (req: any, res: any) => {
   const { mobile_number, password } = req.body;
 
   const user = await User.findOne({ mobile_number });
@@ -101,7 +100,7 @@ const login = asyncHandler(async (req: any, res: any) => {
 //@description     Auth / Logout the user
 //@route           GET /api/users/logout
 //@access          Private
-const logout = asyncHandler(async (req: any, res: any) => {
+export const logout = asyncHandler(async (req: any, res: any) => {
   const token = expireToken(req.user._id);
   res.status(200).json({
     status: "success",
@@ -109,5 +108,3 @@ const logout = asyncHandler(async (req: any, res: any) => {
     message: "Successfully logged out of your account",
   });
 });
-
-exports = { getUsers, signUp, login, logout };

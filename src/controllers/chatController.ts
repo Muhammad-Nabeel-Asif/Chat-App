@@ -7,7 +7,7 @@ import { User } from "../models/userModel";
 //@description     Create or fetch One to One Chat
 //@route           POST /api/chats/create-chat
 //@access          Protected
-const createChat = asyncHandler(
+export const createChat = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req.body as { userId: string };
 
@@ -57,7 +57,7 @@ const createChat = asyncHandler(
 //@description     Fetch all chats for a user
 //@route           GET /api/chats/fetch-chats
 //@access          Protected
-const fetchChats = asyncHandler(
+export const fetchChats = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
@@ -82,7 +82,7 @@ const fetchChats = asyncHandler(
 //@description     Create New Group Chat
 //@route           POST /api/chats/create-group-chat
 //@access          Protected
-const createGroupChat = asyncHandler(
+export const createGroupChat = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     if (!req.body.users || !req.body.name) {
       return res.status(400).send({ message: "Please Fill all the feilds" });
@@ -121,7 +121,7 @@ const createGroupChat = asyncHandler(
 // @desc    Rename Group
 // @route   PUT /api/chats/update-group-name
 // @access  Protected
-const updateGroupName = asyncHandler(
+export const updateGroupName = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { chatId, chatName } = req.body;
 
@@ -149,7 +149,7 @@ const updateGroupName = asyncHandler(
 // @desc    Remove user from Group
 // @route   PUT /api/chats/remove-from-group
 // @access  Protected
-const removeFromGroup = asyncHandler(
+export const removeFromGroup = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { chatId, userId } = req.body;
 
@@ -179,7 +179,7 @@ const removeFromGroup = asyncHandler(
 // @desc    Add user to Group / Leave
 // @route   PUT /api/chats/add-to-group
 // @access  Protected
-const addToGroup = asyncHandler(
+export const addToGroup = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { chatId, userId } = req.body;
 
@@ -205,12 +205,3 @@ const addToGroup = asyncHandler(
     }
   }
 );
-
-exports = {
-  createChat,
-  fetchChats,
-  createGroupChat,
-  updateGroupName,
-  addToGroup,
-  removeFromGroup,
-};

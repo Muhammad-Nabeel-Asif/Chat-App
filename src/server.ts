@@ -12,9 +12,9 @@ import YAML from "yamljs";
 import rateLimit from "express-rate-limit";
 
 import { connectDB } from "./db/connect";
-import { userRoutes } from "./routes/userRoutes";
-import { chatRoutes } from "./routes/chatRoutes";
-import { messageRoutes } from "./routes/messageRoutes";
+import { router as userRoutes } from "./routes/userRoutes";
+import { router as chatRoutes } from "./routes/chatRoutes";
+import { router as messageRoutes } from "./routes/messageRoutes";
 import { notFound, errorHandler } from "./middleware/errorMiddleware";
 import { protect } from "./middleware/authMiddleware";
 const swaggerDocument = YAML.load("./swagger/swagger.yaml");
@@ -61,8 +61,8 @@ app.use("/api/messages", protect, messageRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-// --- Starting Server And DB ---
-const start = async () => {
+// ------ Starting Server And DB ------
+(async () => {
   try {
     await connectDB(process.env.MONGO_URI);
     httpServer.listen(PORT, () =>
@@ -71,30 +71,4 @@ const start = async () => {
   } catch (error) {
     console.log(error);
   }
-};
-start();
-
-/*
-// --- Socket.io ---
-io.on("connection", (socket) => {
-  //
-  socket.on("setup", (userId) => {
-    socket.join(userId);
-    socket.emit("connected");
-  });
-  //
-  socket.on("join chat", (chatIdForRoom) => {
-    socket.join(chatIdForRoom);
-    console.log("User Joined Room: " + chatIdForRoom);
-  });
-  //
-  socket.on("new message", (newMessageRecieved) => {       
-      socket.in(user._id).emit("message recieved", newMessageRecieved);      
-    });
-
-  socket.off("setup", () => {
-    console.log("USER DISCONNECTED");
-    socket.leave(userData._id);
-  });
-});
-*/
+})();
