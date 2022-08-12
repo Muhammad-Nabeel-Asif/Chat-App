@@ -1,0 +1,5 @@
+1) TypeScript specific libraries must know about: 
+
+	i) class transformer npm
+	ii) class validator npm
+	iii) ts-node

@@ -1,0 +1,386 @@
+openapi: 3.0.0
+info:
+  title: Chat App
+  contact:
+    name: Muhammad Nabeel Asif
+    email: nabeel.asif362@gmail.com
+  version: "1.0"
+servers:
+  - url: https://beautiful-wind-cave-54166.herokuapp.com
+    variables: {}
+paths:
+  /api/users/login:
+    post:
+      tags:
+        - Users
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+            example:
+              mobile_number: 0300-0000000
+              password: test1234
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /api/users/signup:
+    post:
+      tags:
+        - Users
+      summary: Sign Up
+      operationId: SignUp
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpRequest"
+            example:
+              email: ali@gmail.com
+              mobile_number: 0366-6666666
+              password: test1234
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /api/users/getUsers:
+    get:
+      tags:
+        - Users
+      summary: Get All Users
+      operationId: GetAllUsers
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /api/users/logout:
+    get:
+      tags:
+        - Users
+      summary: Logout
+      operationId: Logout
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /api/chats/create-chat:
+    post:
+      tags:
+        - Chats
+      summary: Create Chat
+      operationId: CreateChat
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateChatRequest"
+            example:
+              userId: 62d4fdb53890950c9aaecc6a
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /api/chats/fetch-chats:
+    get:
+      tags:
+        - Chats
+      summary: Fetch Chat
+      operationId: FetchChat
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /api/chats/create-group-chat:
+    post:
+      tags:
+        - Chats
+      summary: Create Group Chat
+      operationId: CreateGroupChat
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGroupChatRequest"
+            example:
+              name: Test Group
+              users: '["62bde5d59c2b6879c55be179", "62bde6699c2b6879c55be182"]'
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /chats/update-group-name:
+    put:
+      tags:
+        - Chats
+      summary: Update Group Name
+      operationId: UpdateGroupName
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGroupNameRequest"
+            example:
+              chatId: 62c2892400405d49dd987483
+              chatName: test group
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /chats/add-to-group:
+    put:
+      tags:
+        - Chats
+      summary: Add To Group
+      operationId: AddToGroup
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddToGroupRequest"
+            example:
+              chatId: 62c2892400405d49dd987483
+              userId: 62bc2cf08b7a5c740742e1c3
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /chats/remove-from-group:
+    put:
+      tags:
+        - Chats
+      summary: Remove From Group
+      operationId: RemoveFromGroup
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RemoveFromGroupRequest"
+            example:
+              chatId: 62c2892400405d49dd987483
+              userId: 62bde6699c2b6879c55be182
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /api/messages/fetch-all-messages/{chatId}:
+    get:
+      tags:
+        - Messages
+      summary: Fetch Messages
+      parameters:
+        - in: path
+          name: chatId
+          schema:
+            type: string
+          required: true
+          description: chatId of the user to get complete chat content
+      operationId: FetchMessages
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /api/messages/send-message:
+    post:
+      tags:
+        - Messages
+      summary: Send Message
+      operationId: SendMessage
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendMessageRequest"
+            example:
+              content: Ali Here xd!
+              chatId: 62d4fe933890950c9aaecca6
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    LoginRequest:
+      title: LoginRequest
+      required:
+        - mobile_number
+        - password
+      type: object
+      properties:
+        mobile_number:
+          type: string
+        password:
+          type: string
+      example:
+        mobile_number: 0300-0000000
+        password: test1234
+    SignUpRequest:
+      title: SignUpRequest
+      required:
+        - email
+        - mobile_number
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        mobile_number:
+          type: string
+        password:
+          type: string
+      example:
+        email: ali@gmail.com
+        mobile_number: 0366-6666666
+        password: test1234
+    CreateChatRequest:
+      title: CreateChatRequest
+      required:
+        - userId
+      type: object
+      properties:
+        userId:
+          type: string
+      example:
+        userId: 62d4fdb53890950c9aaecc6a
+    CreateGroupChatRequest:
+      title: CreateGroupChatRequest
+      required:
+        - name
+        - users
+      type: object
+      properties:
+        name:
+          type: string
+        users:
+          type: string
+      example:
+        name: Test Group
+        users: '["62bde5d59c2b6879c55be179", "62bde6699c2b6879c55be182"]'
+    UpdateGroupNameRequest:
+      title: UpdateGroupNameRequest
+      required:
+        - chatId
+        - chatName
+      type: object
+      properties:
+        chatId:
+          type: string
+        chatName:
+          type: string
+      example:
+        chatId: 62c2892400405d49dd987483
+        chatName: test group
+    AddToGroupRequest:
+      title: AddToGroupRequest
+      required:
+        - chatId
+        - userId
+      type: object
+      properties:
+        chatId:
+          type: string
+        userId:
+          type: string
+      example:
+        chatId: 62c2892400405d49dd987483
+        userId: 62bc2cf08b7a5c740742e1c3
+    RemoveFromGroupRequest:
+      title: RemoveFromGroupRequest
+      required:
+        - chatId
+        - userId
+      type: object
+      properties:
+        chatId:
+          type: string
+        userId:
+          type: string
+      example:
+        chatId: 62c2892400405d49dd987483
+        userId: 62bde6699c2b6879c55be182
+    SendMessageRequest:
+      title: SendMessageRequest
+      required:
+        - content
+        - chatId
+      type: object
+      properties:
+        content:
+          type: string
+        chatId:
+          type: string
+      example:
+        content: Ali Here xd!
+        chatId: 62d4fe933890950c9aaecca6
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Users
+  - name: Chats
+  - name: Messages
